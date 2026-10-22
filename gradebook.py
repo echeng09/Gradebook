@@ -13,7 +13,7 @@ def add_grade(subject, grade):
     gradebook[subject].append(grade)
 
 #3. print_average(subject):
-#Prints average of grades for a subject and prints (rounded to 2 decimal values)
+#calcs average of grades for a subject and prints (rounded to 2 decimal values)
 def print_average(subject):
     grades = gradebook[subject]
     #can use sum to add grades and divide by the quantity of values (length)
@@ -36,8 +36,36 @@ def print_grades(subject):
             result = result + ", "
     print(subject + " grades: " + result)
 
+#5. print_all_averages():
+#prints all subjects and their averages
+#indicate best and worst subjects (based on avgs) by keeping track while looping
+def print_all_averages():
+    # use the first subject as the starting point for best and worst
+    first = list(gradebook.keys())[0]
+    first_grades = gradebook[first]
+    best = first
+    worst = first
+    best_avg = sum(first_grades) / len(first_grades)
+    best_avg = round(best_avg * 100) / 100
+    worst_avg = best_avg
 
+    for subject in gradebook:
+        grades = gradebook[subject]
+        average = sum(grades)/len(grades)
+        average = round(average * 100) / 100
+        print(subject + ": " + str(average))
+        if average > best_avg:
+            best_avg = average
+            best = subject
+        if average < worst_avg:
+            worst_avg = average
+            worst = subject
+    print("Best subject: " + best)
+    print("Worst subject: " + worst)
     
+
+
+
 
 def main():
     #testing add_grade method:
@@ -49,6 +77,8 @@ def main():
     #testing print_grades:
     print_grades("English")
     print_grades("Comp Sci")
+    #testing print_all_averages:
+    print_all_averages()
 
 if __name__ == "__main__":
     main()
