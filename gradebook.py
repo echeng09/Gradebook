@@ -96,7 +96,8 @@ def get_GPA():
     return round(tot/len(gradebook),2)
 
 
-
+#7. interactive main menu with options for user
+#old testing calls listed as comments
 def main():
     #loop
     while True:
