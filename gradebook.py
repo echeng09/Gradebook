@@ -98,19 +98,49 @@ def get_GPA():
 
 
 def main():
+    #loop
+    while True:
+        #user choices
+        print("GRADEBOOK MAIN MENU")
+        print("1. Show all classes and averages")
+        print("2. Show all grades for a class")
+        print("3. Show GPA")
+        print("4. Add a grade")
+        choice = input("Choose an option (1-4): ")
+
+        if choice == "1":
+            print_all_averages()
+        elif choice == "2":
+            #ask for class
+            subject = input("Which class? ")
+            print_grades(subject)
+        elif choice == "3":
+            print("Your GPA: " + str(get_GPA()))
+        elif choice == "4":
+            user_subject = input("Which class? ")
+            user_grade = float(input("What grade? "))
+            add_grade(user_subject, user_grade)
+            print("Added " + str(user_grade) + " to " + user_subject + ".")
+        else: 
+            print("Try again.")
+        print("Returning to main menu...")
+        print()
+
+
+    #OLD TESTING BELOW:
     #testing add_grade method:
-    add_grade("Math", 100)
-    add_grade("Physics", 88)
-    print(gradebook) 
+    #add_grade("Math", 100)
+    #add_grade("Physics", 88)
+    #print(gradebook) 
     #testing print_average:
-    print_average("Math")
+    #print_average("Math")
     #testing print_grades:
-    print_grades("English")
-    print_grades("Comp Sci")
+    #print_grades("English")
+    #print_grades("Comp Sci")
     #testing print_all_averages:
-    print_all_averages()
+    #print_all_averages()
     #test get_GPA:
-    print(get_GPA())
+    #print(get_GPA())
 
 if __name__ == "__main__":
     main()
