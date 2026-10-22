@@ -18,8 +18,9 @@ def print_average(subject):
     grades = gradebook[subject]
     #can use sum to add grades and divide by the quantity of values (length)
     average = sum(grades)/len(grades)
-    #get it to round to 2 places
-    average = round(average * 100) / 100
+    #get it to round to 2 places 
+    #average = round(average * 100) / 100
+    average = round(average, 2)
     print(subject + " average: " + str(average))
 
 #4. print_grades(subject):
@@ -46,13 +47,13 @@ def print_all_averages():
     best = first
     worst = first
     best_avg = sum(first_grades) / len(first_grades)
-    best_avg = round(best_avg * 100) / 100
+    best_avg = round(best_avg, 2)
     worst_avg = best_avg
 
     for subject in gradebook:
         grades = gradebook[subject]
         average = sum(grades)/len(grades)
-        average = round(average * 100) / 100
+        average = round(average, 2)
         print(subject + ": " + str(average))
         if average > best_avg:
             best_avg = average
@@ -63,7 +64,36 @@ def print_all_averages():
     print("Best subject: " + best)
     print("Worst subject: " + worst)
     
-
+#6. get_GPA():
+#returns GPA across all subjects on a 4.0 scale
+#converts each subject's avg to grade points using the chart, then averages those points
+def get_GPA():
+    tot = 0
+    for subject in gradebook:
+        grades = gradebook[subject]
+        avg = sum(grades)/len(grades)
+        avg = round(avg, 2)
+        #convert average to GPA
+        #A
+        if avg >= 92.5:
+            points = 4.0 
+        #A-
+        elif avg >= 89.5 and avg <= 92.49:
+            points = 3.7 
+        #B
+        elif avg >= 79.5 and avg <= 89.49:
+            points = 3.0
+        #C
+        elif avg >= 69.5 and avg <= 79.49:
+            points = 2.0
+        #D
+        elif avg >= 65 and avg <= 69.49:
+            points = 1.0
+        else:
+            points = 0
+        tot = tot + points
+    #rounding gpa to 2 decimals (i think that's what it usually is???)
+    return round(tot/len(gradebook),2)
 
 
 
@@ -79,6 +109,8 @@ def main():
     print_grades("Comp Sci")
     #testing print_all_averages:
     print_all_averages()
+    #test get_GPA:
+    print(get_GPA())
 
 if __name__ == "__main__":
     main()
