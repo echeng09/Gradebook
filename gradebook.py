@@ -107,21 +107,33 @@ def main():
         print("2. Show all grades for a class")
         print("3. Show GPA")
         print("4. Add a grade")
-        choice = input("Choose an option (1-4): ")
+        print("5. Quit")
+        choice = input("Choose an option (1-5): ")
 
         if choice == "1":
             print_all_averages()
         elif choice == "2":
             #ask for class
             subject = input("Which class? ")
-            print_grades(subject)
+
+            if subject in gradebook:
+                print_grades(subject)
+            else:
+                print("That class isn't in the gradebook.")
+                #show valid classes so user knows what to type (like how ls works in terminal)
+                print("Available classes: " + ", ".join(gradebook.keys()))
+
         elif choice == "3":
             print("Your GPA: " + str(get_GPA()))
         elif choice == "4":
             user_subject = input("Which class? ")
+            #must type the num (0-100 or 100+ w/ extra credit)
             user_grade = float(input("What grade? "))
             add_grade(user_subject, user_grade)
             print("Added " + str(user_grade) + " to " + user_subject + ".")
+        elif choice == "5":
+            print("Bye :)")
+            break
         else: 
             print("Try again.")
         print("Returning to main menu...")
