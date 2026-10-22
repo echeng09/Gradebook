@@ -22,10 +22,33 @@ def print_average(subject):
     average = round(average * 100) / 100
     print(subject + " average: " + str(average))
 
+#4. print_grades(subject):
+#prints all grades for chosen subject
+def print_grades(subject):
+    grades = gradebook[subject]
+    #create empty string
+    result = ""
+    #add each grade w/ spacing commas
+    for i in range(len(grades)):
+        result = result + str(grades[i])
+        #dont add comma for the last one
+        if i < len(grades)-1:
+            result = result + ", "
+    print(subject + " grades: " + result)
+
+
+    
 
 def main():
+    #testing add_grade method:
+    add_grade("Math", 100)
+    add_grade("Physics", 88)
+    print(gradebook) 
     #testing print_average:
     print_average("Math")
+    #testing print_grades:
+    print_grades("English")
+    print_grades("Comp Sci")
 
 if __name__ == "__main__":
     main()
