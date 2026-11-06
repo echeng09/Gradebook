@@ -132,8 +132,13 @@ def main():
         if choice == "1":
             print_all_averages()
         elif choice == "2":
+            #EXTENSION: shows current subjects
+            print("Enter a subject from the following options: ")
+            print("[" + ", ".join(gradebook.keys()) + "]")
+            
             #ask for class
-            subject = input("Which class? ")
+            #EXTENSION: lower so works for diff cases
+            subject = input("Which class? ").lower()
 
             if subject in gradebook:
                 print_grades(subject)
@@ -145,13 +150,26 @@ def main():
         elif choice == "3":
             print("Your GPA: " + str(get_GPA()))
         elif choice == "4":
-            user_subject = input("Which class? ")
+            #EXTENSION: shows list
+            print("Enter a subject from the following options or enter a new subject: ")
+            print("[" + ", ".join(gradebook.keys()) + "]")
+            
+            #EXTENSION: now handles all cases
+            user_subject = input("Which class? ").lower()
             #must type the num (0-100 or 100+ w/ extra credit)
             user_grade = float(input("What grade? "))
             add_grade(user_subject, user_grade)
             print("Added " + str(user_grade) + " to " + user_subject + ".")
         elif choice == "5":
-            print("Bye :)")
+            #EXTENSION: save the grades on CSV before quitting
+            file = open("grades.csv", "w")
+            for subject in gradebook:
+                line = subject
+                for grade in gradebook[subject]:
+                    line = line + "," + str(grade)
+                file.write(line + "\n")
+            file.close()
+            print("Grades saved! Bye :)")
             break
         else: 
             print("Try again.")
