@@ -1,8 +1,26 @@
-#1. gradebook dictionary
+#gradebook dictionary
 #key is subject, value is list of grades
-gradebook = {"Math": [60, 30, 70, 57], "English": [88, 90, 93], "History": [82, 87, 90], "Comp Sci": [90, 87, 75, 80]}
+#now starts empty (w/ extension project), gets filled in from grades.csv by load_grades()
+gradebook = {}
 
-#2. add_grade(subject, grade):
+#EXTENSION: load_grades():
+#reads grades.csv and saves into gradebook
+def load_grades():
+    #I searched up how to do this (forgot how to use the csv file)
+    file = open("grades.csv", "r")
+    for line in file:
+        parts = line.split(",")
+        subject = parts[0]
+        grades = []
+        for i in range(1, len(parts)):
+            grades.append(float(parts[i]))
+        gradebook[subject] = grades
+    file.close()
+
+
+
+
+#add_grade(subject, grade):
 #add a grade to subjects list
 #if subject isn't in gradebook yet, creates the subject first and then adds the grade
 def add_grade(subject, grade):
@@ -12,7 +30,7 @@ def add_grade(subject, grade):
     #add grade to subject list
     gradebook[subject].append(grade)
 
-#3. print_average(subject):
+#print_average(subject):
 #calcs average of grades for a subject and prints (rounded to 2 decimal values)
 def print_average(subject):
     grades = gradebook[subject]
@@ -23,7 +41,7 @@ def print_average(subject):
     average = round(average, 2)
     print(subject + " average: " + str(average))
 
-#4. print_grades(subject):
+#print_grades(subject):
 #prints all grades for chosen subject
 def print_grades(subject):
     grades = gradebook[subject]
@@ -37,7 +55,7 @@ def print_grades(subject):
             result = result + ", "
     print(subject + " grades: " + result)
 
-#5. print_all_averages():
+#print_all_averages():
 #prints all subjects and their averages
 #indicate best and worst subjects (based on avgs) by keeping track while looping
 def print_all_averages():
@@ -64,7 +82,7 @@ def print_all_averages():
     print("Best subject: " + best)
     print("Worst subject: " + worst)
     
-#6. get_GPA():
+#get_GPA():
 #returns GPA across all subjects on a 4.0 scale
 #converts each subject's avg to grade points using the chart, then averages those points
 def get_GPA():
@@ -95,10 +113,11 @@ def get_GPA():
     #rounding gpa to 2 decimals (i think that's what it usually is???)
     return round(tot/len(gradebook),2)
 
-
-#7. interactive main menu with options for user
+#interactive main menu with options for user
 #old testing calls listed as comments
 def main():
+    #load grades from csv before show menu
+    load_grades()
     #loop
     while True:
         #user choices
@@ -141,6 +160,9 @@ def main():
 
 
     #OLD TESTING BELOW:
+    #test load_grades:
+    #load_grades()
+    #print(gradebook)
     #testing add_grade method:
     #add_grade("Math", 100)
     #add_grade("Physics", 88)
