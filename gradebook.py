@@ -136,6 +136,29 @@ def get_GPA():
     #rounding gpa to 2 decimals (i think that's what it usually is???)
     return round(tot/len(gradebook),2)
 
+#EXTENSION: remove_grade(subject, grade):
+#removes a grade from subjects list of their choice
+#prints failure if subject or grade doesnt exist
+def remove_grade(subject, grade):
+    #check subject exists!
+    if subject not in gradebook:
+        print("Failed, " + subject + " isn't in gradebook.")
+        return
+    #check grade in subject list
+    if grade not in gradebook[subject]:
+        print("Failed, " + str(grade) + " isn't a grade in " + subject)
+        return
+
+    gradebook[subject].remove(grade)
+    print("grade successfuly removed from " + subject + ".")
+    #make sure not divided by zero
+    if len(gradebook[subject]) == 0:
+        gradebook.pop(subject)
+        print("no grades left so removed the subject from the gradebook")
+
+              
+
+
 #interactive main menu with options for user
 #old testing calls listed as comments
 def main():
@@ -149,14 +172,16 @@ def main():
         print("2. Show all grades for a class")
         print("3. Show GPA")
         print("4. Add a grade")
-        print("5. Quit")
-        choice = input("Choose an option (1-5): ")
+        print("5. Remove a grade")
+        print("6. Quit")
+        choice = input("Choose an option (1-6): ")
 
         if choice == "1":
             print_all_averages()
         elif choice == "2":
             #EXTENSION: shows current subjects
             print("Enter a subject from the following options: ")
+            #found how to print neatly using join()
             print("[" + ", ".join(gradebook.keys()) + "]")
             
             #ask for class
@@ -190,6 +215,13 @@ def main():
                 add_grade(user_subject, user_grade)
                 print("Added " + str(user_grade) + " to " + user_subject + ".")
         elif choice == "5":
+            #EXTENSION: remove a grade
+            print("Enter a subject from the following options: ")
+            print("[" + ", ". join(gradebook.keys()) + "]")
+            user_subject = input("Which class? ").strip().lower()
+            user_grade = float(input("Which grade to remove? "))
+            remove_grade(user_subject, user_grade)
+        elif choice == "6":
             #EXTENSION: save the grades on CSV before quitting
             file = open("grades.csv", "w")
             for subject in gradebook:
@@ -207,6 +239,11 @@ def main():
 
 
     #OLD TESTING BELOW:
+    #test remove_grade:
+    #remove_grade("math", 30)
+    #remove_grade("art", 90)
+    #add_grade("art", 80)
+    #remove_grade("art", 80)
     #test load_grades:
     #load_grades()
     #print(gradebook)
