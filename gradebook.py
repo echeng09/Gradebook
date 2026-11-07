@@ -13,12 +13,15 @@ def load_grades():
     except FileNotFoundError:
         print("grades.csv was not found, starting with an empty gradebook")
         return
+    #split by ,
     for line in file:
         parts = line.split(",")
         subject = parts[0]
         grades = []
+        #convert and add to list
         for i in range(1, len(parts)):
             grades.append(float(parts[i]))
+        #save subjects and grades to dictionary
         gradebook[subject] = grades
     file.close()
 
@@ -148,6 +151,7 @@ def remove_grade(subject, grade):
         print("Failed, " + str(grade) + " isn't a grade in " + subject)
         return
 
+    #remove() only takes out first match in case there are duplicates in the list
     gradebook[subject].remove(grade)
     print("grade successfuly removed from " + subject + ".")
     #make sure not divided by zero
@@ -171,14 +175,17 @@ def visualize_grades() :
     for subject in gradebook:
         grades = gradebook[subject]
         average = sum(grades)/len(grades)
+        #round down to nearest 5 by dividing by 5 and user int()
         rounded = int(average/5)*5
 
+        #now represent above 100 (2x), over 50 (1 x), and less than 50 (just *)
         if rounded >= 100:
             bar = "XX" + ("*" * int((rounded-100)/5))
         elif rounded >= 50:
             bar = "X" + ("*" * int((rounded-50)/5))
         else:
             bar = "*" * int(rounded/5)
+        #add spaces before the shorter names to make things line up neatly
         spaces = " " * (longest - len(subject))
         print(spaces + subject + ": " + bar)
     
@@ -244,6 +251,7 @@ def main():
             #EXTENSION: remove a grade
             print("Enter a subject from the following options: ")
             print("[" + ", ". join(gradebook.keys()) + "]")
+            #strip and lower to match keys in option 4
             user_subject = input("Which class? ").strip().lower()
             user_grade = float(input("Which grade to remove? "))
             remove_grade(user_subject, user_grade)
@@ -254,9 +262,11 @@ def main():
             #EXTENSION: save the grades on CSV before quitting
             file = open("grades.csv", "w")
             for subject in gradebook:
+                #build line like the csv file to match
                 line = subject
                 for grade in gradebook[subject]:
                     line = line + "," + str(grade)
+                #make sure each on own line
                 file.write(line + "\n")
             file.close()
             print("Grades saved! Bye :)")
