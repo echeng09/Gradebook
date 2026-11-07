@@ -173,7 +173,9 @@ def visualize_grades() :
         average = sum(grades)/len(grades)
         rounded = int(average/5)*5
 
-        if rounded >= 50:
+        if rounded >= 100:
+            bar = "XX" + ("*" * int((rounded-100)/5))
+        elif rounded >= 50:
             bar = "X" + ("*" * int((rounded-50)/5))
         else:
             bar = "*" * int(rounded/5)
