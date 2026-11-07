@@ -22,9 +22,6 @@ def load_grades():
         gradebook[subject] = grades
     file.close()
 
-
-
-
 #add_grade(subject, grade):
 #add a grade to subjects list
 #if subject isn't in gradebook yet, creates the subject first and then adds the grade
@@ -136,6 +133,8 @@ def get_GPA():
     #rounding gpa to 2 decimals (i think that's what it usually is???)
     return round(tot/len(gradebook),2)
 
+
+
 #EXTENSION: remove_grade(subject, grade):
 #removes a grade from subjects list of their choice
 #prints failure if subject or grade doesnt exist
@@ -156,7 +155,31 @@ def remove_grade(subject, grade):
         gradebook.pop(subject)
         print("no grades left so removed the subject from the gradebook")
 
-              
+#EXTENSION: visualize_grades():
+#prints a visual rep of each subject average
+#X  = 50% * = 5% (like the example on the worksheet) and avgs roudn down
+def visualize_grades() :
+    #show if g book empty
+    if len(gradebook) ==0:
+        print("no grades yet, use option 4 to add one")
+        return
+    #find longest subject name to make sure aligned (goal is to print out like the example on the sheet)
+    longest = 0
+    for subject in gradebook:
+        if len(subject) > longest:
+            longest = len(subject)
+    for subject in gradebook:
+        grades = gradebook[subject]
+        average = sum(grades)/len(grades)
+        rounded = int(average/5)*5
+
+        if rounded >= 50:
+            bar = "X" + ("*" * int((rounded-50)/5))
+        else:
+            bar = "*" * int(rounded/5)
+        spaces = " " * (longest - len(subject))
+        print(spaces + subject + ": " + bar)
+    
 
 
 #interactive main menu with options for user
@@ -173,8 +196,9 @@ def main():
         print("3. Show GPA")
         print("4. Add a grade")
         print("5. Remove a grade")
-        print("6. Quit")
-        choice = input("Choose an option (1-6): ")
+        print("6. Visualize grades")
+        print("7. Quit")
+        choice = input("Choose an option (1-7): ")
 
         if choice == "1":
             print_all_averages()
@@ -186,7 +210,7 @@ def main():
             
             #ask for class
             #EXTENSION: lower so works for diff cases
-            subject = input("Which class? ").lower()
+            subject = input("Which class? ").strip().lower()
 
             if subject in gradebook:
                 print_grades(subject)
@@ -222,6 +246,9 @@ def main():
             user_grade = float(input("Which grade to remove? "))
             remove_grade(user_subject, user_grade)
         elif choice == "6":
+            #EXTENSION: visualize w the symbols
+            visualize_grades()
+        elif choice == "7":
             #EXTENSION: save the grades on CSV before quitting
             file = open("grades.csv", "w")
             for subject in gradebook:
