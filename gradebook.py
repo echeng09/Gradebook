@@ -7,7 +7,12 @@ gradebook = {}
 #reads grades.csv and saves into gradebook
 def load_grades():
     #I searched up how to do this (forgot how to use the csv file)
-    file = open("grades.csv", "r")
+    #EXTENSION: if file doesn't exist start w/ empty gradebook
+    try:
+        file = open("grades.csv", "r")
+    except FileNotFoundError:
+        print("grades.csv was not found, starting with an empty gradebook")
+        return
     for line in file:
         parts = line.split(",")
         subject = parts[0]
@@ -25,14 +30,20 @@ def load_grades():
 #if subject isn't in gradebook yet, creates the subject first and then adds the grade
 def add_grade(subject, grade):
     #create empty list if subject not in gradebook yet
+    #EXTENSION: let user know new subject was created
     if subject not in gradebook:
         gradebook[subject] = []
+        print("New class " + subject + " created")
     #add grade to subject list
     gradebook[subject].append(grade)
 
 #print_average(subject):
 #calcs average of grades for a subject and prints (rounded to 2 decimal values)
 def print_average(subject):
+    #EXTENSION: if no grades, divides by zero so need to fix that
+    if len(gradebook[subject]) == 0:
+        print(subject + " has no grades yet, so no average yet")
+        return
     grades = gradebook[subject]
     #can use sum to add grades and divide by the quantity of values (length)
     average = sum(grades)/len(grades)
@@ -44,6 +55,10 @@ def print_average(subject):
 #print_grades(subject):
 #prints all grades for chosen subject
 def print_grades(subject):
+    #EXTENSION: tell user if class has no grades
+    if len(gradebook[subject]) == 0:
+        print(subject + " has no grades yet")
+        return
     grades = gradebook[subject]
     #create empty string
     result = ""
@@ -59,6 +74,10 @@ def print_grades(subject):
 #prints all subjects and their averages
 #indicate best and worst subjects (based on avgs) by keeping track while looping
 def print_all_averages():
+    #EXTENSION: shows nothing if gradebook is empty so fixes that
+    if len(gradebook) == 0:
+        print("no grades in the gradebook yet, add one w/ option 4")
+        return
     # use the first subject as the starting point for best and worst
     first = list(gradebook.keys())[0]
     first_grades = gradebook[first]
@@ -86,6 +105,10 @@ def print_all_averages():
 #returns GPA across all subjects on a 4.0 scale
 #converts each subject's avg to grade points using the chart, then averages those points
 def get_GPA():
+    #EXTENSION: cannot calc GPA w/o subjects bc divides by zero
+    if len(gradebook) == 0:
+        print("no grades yet, gpa cannot yet be calculated")
+        return 0
     tot = 0
     for subject in gradebook:
         grades = gradebook[subject]
@@ -155,11 +178,17 @@ def main():
             print("[" + ", ".join(gradebook.keys()) + "]")
             
             #EXTENSION: now handles all cases
-            user_subject = input("Which class? ").lower()
-            #must type the num (0-100 or 100+ w/ extra credit)
-            user_grade = float(input("What grade? "))
-            add_grade(user_subject, user_grade)
-            print("Added " + str(user_grade) + " to " + user_subject + ".")
+            #use strip to remove spaces and lower for caps as extension
+
+            user_subject = input("Which class? ").strip().lower()
+            #EXTENSION: no blank names
+            if user_subject == "":
+                print("Failed, class name cannot be blank")
+            else:
+                #must type the num (0-100 or 100+ w/ extra credit)
+                user_grade = float(input("What grade? "))
+                add_grade(user_subject, user_grade)
+                print("Added " + str(user_grade) + " to " + user_subject + ".")
         elif choice == "5":
             #EXTENSION: save the grades on CSV before quitting
             file = open("grades.csv", "w")
