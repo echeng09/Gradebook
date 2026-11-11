@@ -1,4 +1,25 @@
-# Gradebook (ORIGINAL)
+# README.md
+### Project Title: Gradebook
+
+### Author: Elaine Cheng
+
+### In-Depth Overview:
+This program lets a user store their grades for each class, view their grades and averages, and calculate their overall GPA (on a 4.0 scale). Users can use this to get a quick summary of how they're (or their student) doing in school. The program connects to a csv data file to collect a set of classes and their respective grades.
+
+
+### Files:
+#### gradeboook.py
+This python file contains the methods and main methods that users can use. This where the user accesses their grades and information through the main menu, where they can pick to see classes, grades, averages, GPA, remove grades, and see a bar chat visualization of their grades.
+
+#### grades.csv
+This file contains the class and its grades as a csv file that can be accessed in gradebook.py.
+
+#### README.md
+This file is the README and the deliverables.
+
+
+
+# Gradebook Deliverables (ORIGINAL)
 
 ## 1. What is the general purpose of your program?
 This program lets a user store their grades for each class, view their grades and averages, and calculate their overall GPA (4.0 scale). Users can get a quick summary of how they're doing in school.
@@ -16,7 +37,7 @@ One possible improvement is saving the grades to a CSV data file. Right now, whe
 
 Another possible improvement would be the ability to support for multiple students. Right now, the program only tracks one person's grades. Letting a teacher create a gradebook for each student in the class lets them enter grades for everyone and compare class averages. This would make the program a tool for teachers alongside parents and students. Teachers can even use this to calculate things like curves for tests. This feature would come along with saving the grades to a CSV file.
 
-# EXTENSION
+# Deliverables EXTENSION
 
 ## 1. Identify the type of data we are working with. Identify at least two categories the data could fit into and why.
 
